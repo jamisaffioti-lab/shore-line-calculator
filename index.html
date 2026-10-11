@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shore Line Renovations Quote Calculator</title>
+</head>
+<body>
+  <h1>Shore Line Renovations Quote Calculator</h1>
+
+  <label for="job">Job:</label>
+  <select id="job">
+    <option value="">Choose a job</option>
+  </select>
+
+  <p id="price"></p>
+
+  <script>
+    // Prices from the 2026 Price Guide. "price" is the starting price.
+    // Handyman is hourly, so it has a "note" instead of a flat price.
+    const jobs = [
+      { name: "Bathroom refresh",            price: 9500 },
+      { name: "Full bathroom remodel",       price: 16000 },
+      { name: "Tub-to-shower conversion",    price: 11000 },
+      { name: "Kitchen refresh",             price: 12000 },
+      { name: "Full kitchen remodel",        price: 38000 },
+      { name: "Deck repair",                 price: 3500 },
+      { name: "New composite deck",          price: 24000 },
+      { name: "Handyman / small repairs",    note: "$95/hour (2-hour minimum)" }
+    ];
+
+    const select = document.getElementById("job");
+    const priceLine = document.getElementById("price");
+
+    jobs.forEach((job, i) => {
+      const option = document.createElement("option");
+      option.value = i;
+      option.textContent = job.name;
+      select.appendChild(option);
+    });
+
+    select.addEventListener("change", () => {
+      if (select.value === "") {
+        priceLine.textContent = "";
+        return;
+      }
+      const job = jobs[select.value];
+      if (job.price !== undefined) {
+        priceLine.textContent = "Starting at $" + job.price.toLocaleString("en-US");
+      } else {
+        priceLine.textContent = job.note;
+      }
+    });
+  </script>
+</body>
+</html>
